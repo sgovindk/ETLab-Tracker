@@ -1,0 +1,71 @@
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+*.iml
+build/
+pubspec.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Backend/Scraper
+backend/debug/
+*.sqlite
+*.db
+
+# App-specific
+app/.idea/
+app/android/.gradle/
+app/android/local.properties
+app/build/
+app/ios/Pods/
+app/ios/Flutter/Flutter.framework/
+
+# Environment/Secrets
+.env
+.env.local
+secrets.json
+credentials.json
+config.local.json
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db

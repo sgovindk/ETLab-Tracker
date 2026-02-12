@@ -1,0 +1,25 @@
+# Auto detect text files and normalize line endings to LF
+* text=auto
+
+# Dart files
+*.dart text eol=lf
+
+# Python files
+*.py text eol=lf
+
+# iOS
+*.pbxproj merge=union
+*.xcworkspace/** binary
+
+# Android
+*.gradle text eol=lf
+
+# Documentation
+*.md text eol=lf
+README.md text eol=lf
+
+# Binary files
+*.apk binary
+*.aab binary
+*.ttf binary
+*.otf binary
