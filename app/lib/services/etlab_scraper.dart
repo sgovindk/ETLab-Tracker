@@ -19,38 +19,48 @@ class ETLabScraper {
     required String username,
     required String password,
   }) async {
-    _cookies.clear();
+    try {
+      _cookies.clear();
 
-    // Step 1: GET login page (grab CSRF token + session cookie)
-    await _getLoginPage();
+      // Step 1: GET login page (grab CSRF token + session cookie)
+      await _getLoginPage();
 
-    // Step 2: POST login credentials
-    await _postLogin(username, password);
+      // Step 2: POST login credentials
+      await _postLogin(username, password);
 
-    // Step 3: Navigate to /student/attendance
-    final attendancePage = await _getPage('$_baseUrl/student/attendance');
+      // Step 3: Navigate to /student/attendance
+      final attendancePage = await _getPage('$_baseUrl/student/attendance');
 
-    // Step 4: Find the "viewattendancesubject" link
-    final subjectUrl = _findAttendanceSubjectLink(attendancePage);
-    if (subjectUrl == null) {
+      // Step 4: Find the "viewattendancesubject" link
+      final subjectUrl = _findAttendanceSubjectLink(attendancePage);
+      if (subjectUrl == null) {
+        throw ScrapeException(
+          'Could not find attendance-by-subject link. '
+          'ETLab may have changed its page structure.',
+        );
+      }
+
+      // Step 5: GET the subject-wise attendance page
+      final subjectPage = await _getPage(subjectUrl);
+
+      // Step 6: Parse the pivoted attendance table
+      final subjects = _parseAttendanceTable(subjectPage);
+      if (subjects.isEmpty) {
+        throw ScrapeException(
+          'No attendance data found. The table format may have changed.',
+        );
+      }
+
+      return subjects;
+    } on http.ClientException catch (e) {
+      _log('Network error: $e');
       throw ScrapeException(
-        'Could not find attendance-by-subject link. '
-        'ETLab may have changed its page structure.',
+        'Network error. Check your internet connection and try again.',
       );
+    } on Exception catch (e) {
+      _log('Error: $e');
+      rethrow;
     }
-
-    // Step 5: GET the subject-wise attendance page
-    final subjectPage = await _getPage(subjectUrl);
-
-    // Step 6: Parse the pivoted attendance table
-    final subjects = _parseAttendanceTable(subjectPage);
-    if (subjects.isEmpty) {
-      throw ScrapeException(
-        'No attendance data found. The table format may have changed.',
-      );
-    }
-
-    return subjects;
   }
 
   // Step 1: GET login page
