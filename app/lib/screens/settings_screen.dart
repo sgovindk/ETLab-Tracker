@@ -30,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),
         children: [
-          // ── Account Section ──
+          // Account Section
           _sectionLabel('ACCOUNT'),
           const SizedBox(height: 8),
           GlassCard(
@@ -63,13 +63,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 24),
 
-          // ── Actions ──
+          // Actions
           _sectionLabel('ACTIONS'),
           const SizedBox(height: 8),
           _actionTile(
             icon: Icons.sync_rounded,
             label: 'Refresh Attendance',
-            subtitle: 'Re-scrape data from ETLab',
+            subtitle: 'Fetch latest data from ETLab',
             onTap: () {
               FeedbackService.mediumTap();
               attendance.refresh();
@@ -136,14 +136,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 32),
 
-          // ── About ──
+          // About
           Center(
             child: Column(
               children: [
                 Text('ETLab Tracker v1.0.0', style: AppTheme.bodySmall),
                 const SizedBox(height: 4),
                 Text(
-                  'Direct HTTP attendance tracking',
+                  'ETLab Attendance Tracker v1.0.0',
                   style: AppTheme.bodySmall.copyWith(color: AppTheme.textTertiary),
                 ),
               ],

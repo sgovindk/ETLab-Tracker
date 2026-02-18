@@ -29,7 +29,7 @@ class DashboardScreen extends StatelessWidget {
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         slivers: [
-          // ── App Bar ──
+          // App Bar
           SliverAppBar(
             floating: true,
             snap: true,
@@ -72,21 +72,21 @@ class DashboardScreen extends StatelessWidget {
             ],
           ),
 
-          // ── Body ──
+          // Body
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 const SizedBox(height: 8),
 
-                // ── Next Class Card ──
+                // Next Class Card
                 NextClassCard(
                   entry: timetable.nextClass,
                   currentEntry: timetable.currentClass,
                 ),
                 const SizedBox(height: 20),
 
-                // ── Stats Row ──
+                // Stats Row
                 Row(
                   children: [
                     Expanded(
@@ -122,7 +122,7 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
 
-                // ── Low Attendance Banner ──
+                // Low Attendance Banner
                 LowAttendanceBanner(
                   subjects: attendance.belowThreshold,
                   onTap: (s) => Navigator.push(
@@ -135,7 +135,7 @@ class DashboardScreen extends StatelessWidget {
                 if (attendance.belowThreshold.isNotEmpty)
                   const SizedBox(height: 24),
 
-                // ── Today's Schedule ──
+                // Today's Schedule
                 _sectionHeader('TODAY\'S SCHEDULE', TimetableService.todayName()),
                 const SizedBox(height: 12),
                 ...timetable.todayEntries.map((entry) => Padding(
@@ -147,7 +147,7 @@ class DashboardScreen extends StatelessWidget {
 
                 const SizedBox(height: 24),
 
-                // ── Last Sync Info ──
+                // Last Sync Info
                 if (attendance.lastSync != null)
                   Center(
                     child: Text(

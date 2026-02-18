@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// ──────────────────────────────────────────────────────────────────
-///  INDUSTRIAL-GRADE DARK THEME
-/// ──────────────────────────────────────────────────────────────────
 class AppTheme {
   AppTheme._();
 
-  // ── Palette ────────────────────────────────────────────────────
+  // Palette
   static const Color background   = Color(0xFF050508);
   static const Color surface      = Color(0xFF0E0E12);
   static const Color card         = Color(0xFF15151B);
@@ -25,12 +22,12 @@ class AppTheme {
   static const Color textSecondary = Color(0xFF9E9E9E);
   static const Color textTertiary  = Color(0xFF616161);
 
-  // ── Radii ──────────────────────────────────────────────────────
+  // Radii
   static const double radiusSm = 10;
   static const double radiusMd = 16;
   static const double radiusLg = 24;
 
-  // ── Shadows ────────────────────────────────────────────────────
+  // Shadows
   static List<BoxShadow> get cardShadow => [
     BoxShadow(
       color: Colors.black.withOpacity(0.35),
@@ -39,7 +36,7 @@ class AppTheme {
     ),
   ];
 
-  // ── Typography helpers ─────────────────────────────────────────
+  // Typography helpers
   static TextStyle _inter({
     double size = 14,
     FontWeight weight = FontWeight.w400,
@@ -66,7 +63,7 @@ class AppTheme {
         color: color,
       );
 
-  // ── Public text styles ─────────────────────────────────────────
+  // Public text styles
   static TextStyle get headlineLarge =>
       _inter(size: 28, weight: FontWeight.w700, letterSpacing: -0.5);
   static TextStyle get headlineMedium =>
@@ -92,7 +89,7 @@ class AppTheme {
   static TextStyle get monoSmall =>
       _mono(size: 14, weight: FontWeight.w500, color: textSecondary);
 
-  // ── Card decoration ────────────────────────────────────────────
+  // Card decoration
   static BoxDecoration get cardDecoration => BoxDecoration(
         color: card,
         borderRadius: BorderRadius.circular(radiusMd),
@@ -108,7 +105,7 @@ class AppTheme {
         ],
       );
 
-  // ── ThemeData ──────────────────────────────────────────────────
+  // ThemeData
   static ThemeData get dark => ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,

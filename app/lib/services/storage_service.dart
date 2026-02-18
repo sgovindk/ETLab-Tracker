@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/subject_attendance.dart';
 import '../models/timetable_entry.dart';
 
-/// Persists credentials securely and caches attendance / settings.
 class StorageService {
   static late SharedPreferences _prefs;
   static const _secure = FlutterSecureStorage(
@@ -22,7 +21,7 @@ class StorageService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  // ── Credentials (secure) ──────────────────────────────────────
+  // Credentials (secure)
   static Future<void> saveCredentials(String user, String pass) async {
     await _secure.write(key: _kUsername, value: user);
     await _secure.write(key: _kPassword, value: pass);
@@ -41,7 +40,7 @@ class StorageService {
     await _secure.delete(key: _kPassword);
   }
 
-  // ── Cached attendance ─────────────────────────────────────────
+  // Cached attendance
   static Future<void> cacheAttendance(List<SubjectAttendance> data) async {
     final json = data.map((e) => e.toJson()).toList();
     await _prefs.setString(_kAttendance, jsonEncode(json));
@@ -62,7 +61,7 @@ class StorageService {
     return raw != null ? DateTime.tryParse(raw) : null;
   }
 
-  // ── Timetable ─────────────────────────────────────────────────
+  // Timetable
   static Future<void> saveTimetable(List<TimetableEntry> entries) async {
     final json = entries.map((e) => e.toJson()).toList();
     await _prefs.setString(_kTimetable, jsonEncode(json));
@@ -77,7 +76,7 @@ class StorageService {
         .toList();
   }
 
-  // ── Logout ────────────────────────────────────────────────────
+  // Logout
   static Future<void> clearAll() async {
     await clearCredentials();
     await _prefs.clear();

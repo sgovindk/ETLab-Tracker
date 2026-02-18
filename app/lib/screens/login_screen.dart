@@ -188,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Your credentials are stored securely on-device',
+                    'Your credentials are stored securely on this device',
                     style: AppTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),

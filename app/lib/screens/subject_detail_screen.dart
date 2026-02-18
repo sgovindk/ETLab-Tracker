@@ -55,11 +55,11 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
         padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),
         children: [
-          // ── Header ──
+          // Header
           Text(s.subjectName, style: AppTheme.headlineMedium),
           const SizedBox(height: 24),
 
-          // ── Attendance Ring ──
+          // Attendance Ring
           Center(
             child: AttendanceRing(
               percentage: s.percentage,
@@ -70,7 +70,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
           ),
           const SizedBox(height: 24),
 
-          // ── Stats Row ──
+          // Stats Row
           Row(
             children: [
               _statBox('Attended', '${s.hoursAttended}', AppTheme.accent),
@@ -86,7 +86,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
           ),
           const SizedBox(height: 32),
 
-          // ── Target Calculator ──
+          // Target Calculator
           Text('TARGET CALCULATOR', style: AppTheme.labelLarge.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: 12),
           GlassCard(
@@ -138,7 +138,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
           ),
           const SizedBox(height: 16),
 
-          // ── Projection Calculator ──
+          // Projection Calculator
           Text('PROJECTION', style: AppTheme.labelLarge.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: 12),
           GlassCard(
@@ -195,7 +195,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
           ),
           const SizedBox(height: 32),
 
-          // ── Quick projection table ──
+          // Quick projection table
           Text('QUICK LOOKUP', style: AppTheme.labelLarge.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: 12),
           GlassCard(

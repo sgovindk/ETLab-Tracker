@@ -37,7 +37,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),
         children: [
-          // ── Subject selector ──
+          // Subject selector
           Text('SELECT SUBJECT', style: AppTheme.labelLarge.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: 12),
           if (subjects.isEmpty)
@@ -100,7 +100,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           const SizedBox(height: 28),
 
           if (_selected != null) ...[
-            // ── Selected info bar ──
+            // Selected info bar
             Container(
               padding: const EdgeInsets.all(14),
               decoration: AppTheme.glowDecoration(AppTheme.accent),
@@ -138,7 +138,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
             const SizedBox(height: 24),
 
-            // ── Mode switcher ──
+            // Mode switcher
             Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
@@ -155,7 +155,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
             const SizedBox(height: 20),
 
-            // ── Calculator based on mode ──
+            // Calculator based on mode
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               child: _mode == 0 ? _targetMode() : _classesMode(),

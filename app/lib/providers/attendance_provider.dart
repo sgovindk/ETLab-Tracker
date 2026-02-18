@@ -6,9 +6,8 @@ import '../services/feedback_service.dart';
 
 enum SyncStatus { idle, syncing, success, error }
 
-/// Manages authentication state and attendance data.
 class AttendanceProvider extends ChangeNotifier {
-  // ── State ──────────────────────────────────────────────────────
+  // State
   List<SubjectAttendance> _subjects = [];
   SyncStatus _status = SyncStatus.idle;
   String _error = '';
@@ -21,7 +20,7 @@ class AttendanceProvider extends ChangeNotifier {
   DateTime? get lastSync => _lastSync;
   bool get isLoggedIn => _isLoggedIn;
 
-  // ── Derived data ──────────────────────────────────────────────
+  // Derived data
   double get overallPercentage {
     if (_subjects.isEmpty) return 0;
     final totalAttended = _subjects.fold<int>(0, (s, e) => s + e.hoursAttended);
@@ -34,7 +33,7 @@ class AttendanceProvider extends ChangeNotifier {
 
   int get totalSubjects => _subjects.length;
 
-  // ── Init (load cached) ────────────────────────────────────────
+  // Init (load cached)
   Future<void> init() async {
     _isLoggedIn = await StorageService.hasCredentials();
     _subjects = StorageService.getCachedAttendance();
@@ -42,7 +41,7 @@ class AttendanceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Login & fetch ─────────────────────────────────────────────
+  // Login & fetch
   Future<bool> loginAndFetch(String username, String password) async {
     _status = SyncStatus.syncing;
     _error = '';
@@ -81,7 +80,7 @@ class AttendanceProvider extends ChangeNotifier {
     }
   }
 
-  // ── Refresh with stored credentials ───────────────────────────
+  // Refresh with stored credentials
   Future<bool> refresh() async {
     final user = await StorageService.getUsername();
     final pass = await StorageService.getPassword();
@@ -94,7 +93,7 @@ class AttendanceProvider extends ChangeNotifier {
     return loginAndFetch(user, pass);
   }
 
-  // ── Logout ────────────────────────────────────────────────────
+  // Logout
   Future<void> logout() async {
     await StorageService.clearAll();
     _subjects = [];
@@ -104,7 +103,7 @@ class AttendanceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Find subject by code ──────────────────────────────────────
+  // Find subject by code
   SubjectAttendance? findByCode(String code) {
     try {
       return _subjects.firstWhere(

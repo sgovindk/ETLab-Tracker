@@ -3,8 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as html_parser;
 import '../models/subject_attendance.dart';
 
-/// Direct HTTP + HTML scraper for sctce.etlab.in.
-/// No backend needed – runs entirely on-device.
 class ETLabScraper {
   static const _baseUrl = 'https://sctce.etlab.in';
   static const _loginUrl = '$_baseUrl/user/login';
@@ -12,7 +10,7 @@ class ETLabScraper {
   /// Session cookies maintained across requests.
   final Map<String, String> _cookies = {};
 
-  // ── Public API ────────────────────────────────────────────────
+  // Public API
 
   /// Login and fetch attendance in one shot.
   /// Returns list of [SubjectAttendance].
@@ -55,7 +53,7 @@ class ETLabScraper {
     return subjects;
   }
 
-  // ── Step 1: GET login page ────────────────────────────────────
+  // Step 1: GET login page
 
   Future<void> _getLoginPage() async {
     _log('GET $_loginUrl');
@@ -72,7 +70,7 @@ class ETLabScraper {
     }
   }
 
-  // ── Step 2: POST login ────────────────────────────────────────
+  // Step 2: POST login
 
   Future<void> _postLogin(String username, String password) async {
     // Extract CSRF token from cookies (Yii framework uses CSRF)
@@ -137,7 +135,7 @@ class ETLabScraper {
     }
   }
 
-  // ── Step 3–5: Page navigation ─────────────────────────────────
+  // Step 3–5: Page navigation
 
   Future<String> _getPage(String url) async {
     _log('GET $url');
@@ -173,7 +171,7 @@ class ETLabScraper {
     return response.body;
   }
 
-  // ── Find viewattendancesubject link ───────────────────────────
+  // Find viewattendancesubject link
 
   String? _findAttendanceSubjectLink(String html) {
     final doc = html_parser.parse(html);
@@ -200,7 +198,7 @@ class ETLabScraper {
     return null;
   }
 
-  // ── Parse pivoted attendance table ────────────────────────────
+  // Parse pivoted attendance table
 
   List<SubjectAttendance> _parseAttendanceTable(String html) {
     final doc = html_parser.parse(html);
@@ -282,7 +280,7 @@ class ETLabScraper {
     return _regexParsePage(html);
   }
 
-  // ── Parse cell like "25/26 (96%)" ─────────────────────────────
+  // Parse cell like "25/26 (96%)"
 
   Map<String, num>? _parseAttendanceCell(String cellText) {
     if (cellText.isEmpty || !cellText.contains('/')) return null;
@@ -308,7 +306,7 @@ class ETLabScraper {
     return {'attended': attended, 'total': total, 'percentage': percentage};
   }
 
-  // ── Regex fallback on raw HTML ────────────────────────────────
+  // Regex fallback on raw HTML
 
   List<SubjectAttendance> _regexParsePage(String html) {
     final codePattern = RegExp(r'<t[hd][^>]*>\s*([A-Z]{2,5}\d{3,4}[A-Za-z]?)\s*</t[hd]>');
@@ -342,7 +340,7 @@ class ETLabScraper {
     return results;
   }
 
-  // ── Cookie / header management ────────────────────────────────
+  // Cookie / header management
 
   Map<String, String> _defaultHeaders() => {
         'User-Agent':

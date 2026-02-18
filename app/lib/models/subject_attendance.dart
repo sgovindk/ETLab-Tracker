@@ -1,4 +1,3 @@
-/// Model for a single subject's attendance data.
 class SubjectAttendance {
   final String subjectCode;
   final String subjectName;

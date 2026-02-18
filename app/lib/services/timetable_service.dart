@@ -38,9 +38,9 @@ class TimetableService {
     'P6': 16.5,
   };
 
-  // ── Default timetable (user provided) ─────────────────────────
+  // Default timetable (user provided)
   static List<TimetableEntry> get defaultTimetable => [
-    // ── Monday ──
+    // Monday
     const TimetableEntry(day: 'Monday', period: 'P1', time: '9:30–10:30', subjectCode: 'AMT302', subjectName: 'Concepts in Natural Language Processing', teacher: 'Rejimoan R', type: 'Theory'),
     const TimetableEntry(day: 'Monday', period: 'P2', time: '10:30–11:30', subjectCode: 'CST306', subjectName: 'Algorithm Analysis and Design', teacher: 'Surekha I S', type: 'Theory'),
     const TimetableEntry(day: 'Monday', period: 'P3', time: '11:30–12:30', subjectCode: 'ANN', subjectName: 'Artificial Neural Networks Techniques', teacher: '', type: 'Theory'),
@@ -48,7 +48,7 @@ class TimetableService {
     const TimetableEntry(day: 'Monday', period: 'P5', time: '2:30–3:30', subjectCode: 'PROJ', subjectName: 'Mini Project', teacher: '', type: 'Project'),
     const TimetableEntry(day: 'Monday', period: 'P6', time: '3:30–4:30', subjectCode: 'PROJ', subjectName: 'Mini Project', teacher: '', type: 'Project'),
 
-    // ── Tuesday ──
+    // Tuesday
     const TimetableEntry(day: 'Tuesday', period: 'P1', time: '9:30–10:30', subjectCode: 'HUT300', subjectName: 'Industrial Economics and Foreign Trade', teacher: 'Dr. Geethanjali M N', type: 'Theory'),
     const TimetableEntry(day: 'Tuesday', period: 'P2', time: '10:30–11:30', subjectCode: 'AMT302', subjectName: 'Concepts in Natural Language Processing', teacher: 'Rejimoan R', type: 'Theory'),
     const TimetableEntry(day: 'Tuesday', period: 'P3', time: '11:30–12:30', subjectCode: 'ANN', subjectName: 'Artificial Neural Networks Techniques', teacher: '', type: 'Theory'),
@@ -56,7 +56,7 @@ class TimetableService {
     const TimetableEntry(day: 'Tuesday', period: 'P5', time: '2:30–3:30', subjectCode: 'PROJ', subjectName: 'Mini Project', teacher: '', type: 'Project'),
     const TimetableEntry(day: 'Tuesday', period: 'P6', time: '3:30–4:30', subjectCode: 'PROJ', subjectName: 'Mini Project', teacher: '', type: 'Project'),
 
-    // ── Wednesday ──
+    // Wednesday
     const TimetableEntry(day: 'Wednesday', period: 'P1', time: '9:30–10:30', subjectCode: 'AMT302', subjectName: 'Concepts in Natural Language Processing', teacher: 'Rejimoan R', type: 'Theory'),
     const TimetableEntry(day: 'Wednesday', period: 'P2', time: '10:30–11:30', subjectCode: 'AIT304', subjectName: 'Robotics and Intelligent System', teacher: 'Syama R', type: 'Theory'),
     const TimetableEntry(day: 'Wednesday', period: 'P3', time: '11:30–12:30', subjectCode: 'HUT300', subjectName: 'Industrial Economics and Foreign Trade', teacher: 'Dr. Geethanjali M N', type: 'Theory'),
@@ -64,7 +64,7 @@ class TimetableService {
     const TimetableEntry(day: 'Wednesday', period: 'P5', time: '2:30–3:30', subjectCode: 'AMT302', subjectName: 'Concepts in Natural Language Processing', teacher: 'Rejimoan R', type: 'Theory'),
     const TimetableEntry(day: 'Wednesday', period: 'P6', time: '3:30–4:30', subjectCode: 'ANN', subjectName: 'Artificial Neural Networks Techniques', teacher: '', type: 'Theory'),
 
-    // ── Thursday ──
+    // Thursday
     const TimetableEntry(day: 'Thursday', period: 'P1', time: '9:30–10:30', subjectCode: 'NLP_LAB', subjectName: 'Natural Language Processing Lab', teacher: '', type: 'Lab'),
     const TimetableEntry(day: 'Thursday', period: 'P2', time: '10:30–11:30', subjectCode: 'NLP_LAB', subjectName: 'Natural Language Processing Lab', teacher: '', type: 'Lab'),
     const TimetableEntry(day: 'Thursday', period: 'P3', time: '11:30–12:30', subjectCode: 'NLP_LAB', subjectName: 'Natural Language Processing Lab', teacher: '', type: 'Lab'),
@@ -72,7 +72,7 @@ class TimetableService {
     const TimetableEntry(day: 'Thursday', period: 'P5', time: '2:30–3:30', subjectCode: 'AIT304', subjectName: 'Robotics and Intelligent System', teacher: 'Syama R', type: 'Theory'),
     const TimetableEntry(day: 'Thursday', period: 'P6', time: '3:30–4:30', subjectCode: 'CST306', subjectName: 'Algorithm Analysis and Design', teacher: 'Surekha I S', type: 'Theory'),
 
-    // ── Friday ──
+    // Friday
     const TimetableEntry(day: 'Friday', period: 'P1', time: '9:30–10:30', subjectCode: 'HUT300', subjectName: 'Industrial Economics and Foreign Trade', teacher: 'Dr. Geethanjali M N', type: 'Theory'),
     const TimetableEntry(day: 'Friday', period: 'P2', time: '10:30–11:30', subjectCode: 'AIT304', subjectName: 'Robotics and Intelligent System', teacher: 'Syama R', type: 'Theory'),
     const TimetableEntry(day: 'Friday', period: 'P3', time: '11:30–12:30', subjectCode: 'CST306', subjectName: 'Algorithm Analysis and Design', teacher: 'Surekha I S', type: 'Theory'),
@@ -81,7 +81,7 @@ class TimetableService {
     const TimetableEntry(day: 'Friday', period: 'P6', time: '3:30–4:30', subjectCode: 'FREE', subjectName: 'Free Period', teacher: '', type: 'Free'),
   ];
 
-  // ── Helpers ────────────────────────────────────────────────────
+  // Helpers
 
   /// Get today's day name.
   static String todayName() {
