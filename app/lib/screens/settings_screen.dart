@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/attendance_provider.dart';
 import '../providers/timetable_provider.dart';
-import '../services/storage_service.dart';
 import '../services/feedback_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
@@ -16,18 +15,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late TextEditingController _serverCtrl;
-
   @override
   void initState() {
     super.initState();
-    _serverCtrl = TextEditingController(text: StorageService.getServerUrl());
-  }
-
-  @override
-  void dispose() {
-    _serverCtrl.dispose();
-    super.dispose();
   }
 
   @override
@@ -67,50 +57,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   'Subjects loaded',
                   '${attendance.totalSubjects}',
                   AppTheme.accent,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-
-          // ── Server Section ──
-          _sectionLabel('SERVER'),
-          const SizedBox(height: 8),
-          GlassCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Backend URL', style: AppTheme.bodyMedium),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: _serverCtrl,
-                  style: AppTheme.monoSmall,
-                  decoration: const InputDecoration(
-                    hintText: 'http://192.168.x.x:8000',
-                    prefixIcon: Icon(Icons.dns_outlined, size: 18),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      FeedbackService.mediumTap();
-                      await StorageService.setServerUrl(_serverCtrl.text.trim());
-                      if (!context.mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Server URL updated')),
-                      );
-                    },
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppTheme.accent,
-                      side: const BorderSide(color: AppTheme.accent),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                      ),
-                    ),
-                    child: const Text('Save URL'),
-                  ),
                 ),
               ],
             ),
@@ -197,7 +143,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Text('ETLab Tracker v1.0.0', style: AppTheme.bodySmall),
                 const SizedBox(height: 4),
                 Text(
-                  'Selenium-powered attendance tracking',
+                  'Direct HTTP attendance tracking',
                   style: AppTheme.bodySmall.copyWith(color: AppTheme.textTertiary),
                 ),
               ],

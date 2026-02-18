@@ -1,75 +1,51 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import '../models/subject_attendance.dart';
+import 'etlab_scraper.dart';
 
-/// Communicates with the Python FastAPI backend.
+/// Wraps [ETLabScraper] with the same public interface
+/// that the rest of the app expects.
+///
+/// No backend server needed – scraping runs on-device.
 class ApiService {
-  final String baseUrl;
-  ApiService({required this.baseUrl});
+  final ETLabScraper _scraper = ETLabScraper();
 
-  // ── Fetch attendance (one-shot: login + scrape) ─────────────────
+  /// Ignored – kept only so existing code that passes [baseUrl] still compiles.
+  ApiService({String baseUrl = ''});
+
+  // ── Fetch attendance (direct scrape) ──────────────────────────
   Future<List<SubjectAttendance>> fetchAttendance({
     required String username,
     required String password,
   }) async {
-    final uri = Uri.parse('$baseUrl/api/fetch');
-    final response = await http
-        .post(
-          uri,
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({'username': username, 'password': password}),
-        )
-        .timeout(const Duration(seconds: 120));
-
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
-      final List data = body['data'] ?? [];
-      return data
-          .map((e) => SubjectAttendance.fromJson(e as Map<String, dynamic>))
-          .toList();
-    } else if (response.statusCode == 401) {
-      throw ApiException('Invalid credentials');
-    } else {
-      final detail = _extractDetail(response.body);
-      throw ApiException(detail);
+    try {
+      return await _scraper.fetchAttendance(
+        username: username,
+        password: password,
+      );
+    } on ScrapeException catch (e) {
+      throw ApiException(e.message);
+    } catch (e) {
+      throw ApiException('Scraping failed: $e');
     }
   }
 
-  // ── Simple login test ───────────────────────────────────────────
+  // ── Simple login test ─────────────────────────────────────────
   Future<bool> testLogin({
     required String username,
     required String password,
   }) async {
-    final uri = Uri.parse('$baseUrl/api/login');
-    final response = await http
-        .post(
-          uri,
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({'username': username, 'password': password}),
-        )
-        .timeout(const Duration(seconds: 60));
-    return response.statusCode == 200;
-  }
-
-  // ── Health check ────────────────────────────────────────────────
-  Future<bool> healthCheck() async {
     try {
-      final uri = Uri.parse('$baseUrl/health');
-      final response = await http.get(uri).timeout(const Duration(seconds: 5));
-      return response.statusCode == 200;
+      await _scraper.fetchAttendance(
+        username: username,
+        password: password,
+      );
+      return true;
     } catch (_) {
       return false;
     }
   }
 
-  String _extractDetail(String body) {
-    try {
-      final json = jsonDecode(body);
-      return json['detail'] ?? json['message'] ?? 'Unknown server error';
-    } catch (_) {
-      return 'Server returned an unexpected response';
-    }
-  }
+  // ── Health check (always true – no server needed) ─────────────
+  Future<bool> healthCheck() async => true;
 }
 
 class ApiException implements Exception {

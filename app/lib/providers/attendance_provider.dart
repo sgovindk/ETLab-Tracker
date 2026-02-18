@@ -49,7 +49,7 @@ class AttendanceProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final api = ApiService(baseUrl: StorageService.getServerUrl());
+      final api = ApiService();
       final data = await api.fetchAttendance(
         username: username,
         password: password,
@@ -73,7 +73,7 @@ class AttendanceProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     } catch (e) {
-      _error = 'Connection failed. Is the server running?';
+      _error = 'Connection failed. Check your internet connection.';
       _status = SyncStatus.error;
       FeedbackService.error();
       notifyListeners();

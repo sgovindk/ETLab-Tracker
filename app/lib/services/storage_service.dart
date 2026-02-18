@@ -14,7 +14,6 @@ class StorageService {
   // Keys
   static const _kUsername = 'etlab_username';
   static const _kPassword = 'etlab_password';
-  static const _kServerUrl = 'server_url';
   static const _kAttendance = 'cached_attendance';
   static const _kTimetable = 'timetable';
   static const _kLastSync = 'last_sync';
@@ -41,13 +40,6 @@ class StorageService {
     await _secure.delete(key: _kUsername);
     await _secure.delete(key: _kPassword);
   }
-
-  // ── Server URL ────────────────────────────────────────────────
-  static String getServerUrl() =>
-      _prefs.getString(_kServerUrl) ?? 'http://10.0.2.2:8000'; // Android emulator default
-
-  static Future<void> setServerUrl(String url) =>
-      _prefs.setString(_kServerUrl, url);
 
   // ── Cached attendance ─────────────────────────────────────────
   static Future<void> cacheAttendance(List<SubjectAttendance> data) async {

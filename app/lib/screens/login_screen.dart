@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../providers/attendance_provider.dart';
 import '../providers/timetable_provider.dart';
 import '../services/feedback_service.dart';
-import '../services/storage_service.dart';
 import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
@@ -18,23 +17,19 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _userCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
-  final _serverCtrl = TextEditingController();
   bool _obscure = true;
   bool _loading = false;
-  bool _showAdvanced = false;
   String? _errorMsg;
 
   @override
   void initState() {
     super.initState();
-    _serverCtrl.text = StorageService.getServerUrl();
   }
 
   @override
   void dispose() {
     _userCtrl.dispose();
     _passCtrl.dispose();
-    _serverCtrl.dispose();
     super.dispose();
   }
 
@@ -46,9 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
       _loading = true;
       _errorMsg = null;
     });
-
-    // Save server URL
-    await StorageService.setServerUrl(_serverCtrl.text.trim());
 
     final attendance = context.read<AttendanceProvider>();
     final timetable = context.read<TimetableProvider>();
@@ -150,44 +142,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 12),
 
-                  // Advanced (server URL)
-                  GestureDetector(
-                    onTap: () {
-                      FeedbackService.selectionClick();
-                      setState(() => _showAdvanced = !_showAdvanced);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          _showAdvanced
-                              ? Icons.expand_less_rounded
-                              : Icons.expand_more_rounded,
-                          size: 16,
-                          color: AppTheme.textTertiary,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Server settings',
-                          style: AppTheme.bodySmall.copyWith(color: AppTheme.textTertiary),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (_showAdvanced) ...[
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _serverCtrl,
-                      style: AppTheme.monoSmall,
-                      decoration: const InputDecoration(
-                        labelText: 'Backend Server URL',
-                        prefixIcon: Icon(Icons.dns_outlined, size: 20),
-                        hintText: 'http://192.168.x.x:8000',
-                      ),
-                      validator: (v) =>
-                          v != null && v.trim().isNotEmpty ? null : 'Enter server URL',
-                    ),
-                  ],
                   const SizedBox(height: 28),
 
                   // Error message
