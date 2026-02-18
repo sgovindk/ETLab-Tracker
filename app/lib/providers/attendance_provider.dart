@@ -3,6 +3,7 @@ import '../models/subject_attendance.dart';
 import '../services/api_service.dart';
 import '../services/storage_service.dart';
 import '../services/feedback_service.dart';
+import '../services/timetable_service.dart';
 
 enum SyncStatus { idle, syncing, success, error }
 
@@ -36,7 +37,7 @@ class AttendanceProvider extends ChangeNotifier {
   // Init (load cached)
   Future<void> init() async {
     _isLoggedIn = await StorageService.hasCredentials();
-    _subjects = StorageService.getCachedAttendance();
+    _subjects = _resolveSubjectNames(StorageService.getCachedAttendance());
     _lastSync = StorageService.getLastSync();
     notifyListeners();
   }
@@ -54,7 +55,7 @@ class AttendanceProvider extends ChangeNotifier {
         password: password,
       );
 
-      _subjects = data;
+      _subjects = _resolveSubjectNames(data);
       _lastSync = DateTime.now();
       _isLoggedIn = true;
 
@@ -103,6 +104,27 @@ class AttendanceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Map subject codes to readable names using timetable data
+  List<SubjectAttendance> _resolveSubjectNames(List<SubjectAttendance> subjects) {
+    // Build code -> name map from timetable
+    final timetable = StorageService.getSavedTimetable() ?? TimetableService.defaultTimetable;
+    final codeToName = <String, String>{};
+    for (final entry in timetable) {
+      if (entry.subjectCode.isNotEmpty && !entry.isFree) {
+        codeToName[entry.subjectCode.toUpperCase()] = entry.subjectName;
+      }
+    }
+
+    return subjects.map((s) {
+      final key = s.subjectCode.toUpperCase();
+      final name = codeToName[key];
+      if (name != null && (s.subjectName.isEmpty || s.subjectName == s.subjectCode)) {
+        return s.copyWith(subjectName: name);
+      }
+      return s;
+    }).toList();
+  }
+
   // Find subject by code
   SubjectAttendance? findByCode(String code) {
     try {
@@ -112,5 +134,17 @@ class AttendanceProvider extends ChangeNotifier {
     } catch (_) {
       return null;
     }
+  }
+
+  // Update subject name
+  Future<void> updateSubjectName(String subjectCode, String newName) async {
+    final index = _subjects.indexWhere(
+      (s) => s.subjectCode.toLowerCase() == subjectCode.toLowerCase(),
+    );
+    if (index == -1) return;
+
+    _subjects[index] = _subjects[index].copyWith(subjectName: newName);
+    await StorageService.cacheAttendance(_subjects);
+    notifyListeners();
   }
 }

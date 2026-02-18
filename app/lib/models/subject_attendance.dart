@@ -36,6 +36,13 @@ class SubjectAttendance {
     return (hoursAttended + n) / (totalHours + n) * 100;
   }
 
+  /// Predicted percentage after attending [attend] and bunking [bunk] classes.
+  double predictedPercentage(int attend, int bunk) {
+    final newTotal = totalHours + attend + bunk;
+    if (newTotal == 0) return 0;
+    return (hoursAttended + attend) / newTotal * 100;
+  }
+
   /// How many classes can be skipped while staying at/above [threshold]%.
   int bunkableClasses({double threshold = 75.0}) {
     int count = 0;

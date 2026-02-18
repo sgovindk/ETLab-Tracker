@@ -146,6 +146,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   'ETLab Attendance Tracker v1.0.0',
                   style: AppTheme.bodySmall.copyWith(color: AppTheme.textTertiary),
                 ),
+                const SizedBox(height: 16),
+                // "Created by GK" engraving
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppTheme.surface,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppTheme.cardBorder),
+                  ),
+                  child: Text(
+                    'Created by GK',
+                    style: AppTheme.bodySmall.copyWith(
+                      color: AppTheme.accent,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

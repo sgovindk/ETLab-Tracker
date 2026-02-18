@@ -3,7 +3,6 @@ import '../theme/app_theme.dart';
 import '../services/feedback_service.dart';
 import 'dashboard_screen.dart';
 import 'subjects_screen.dart';
-import 'calculator_screen.dart';
 import 'timetable_screen.dart';
 import 'settings_screen.dart';
 
@@ -21,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   static const _screens = [
     DashboardScreen(),
     SubjectsScreen(),
-    CalculatorScreen(),
     TimetableScreen(),
     SettingsScreen(),
   ];
@@ -54,10 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.school_rounded),
               label: 'Subjects',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calculate_rounded),
-              label: 'Calculator',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today_rounded),
