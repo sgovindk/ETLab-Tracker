@@ -84,11 +84,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Logo / Icon
-                Image.asset(
-                  'assets/images/logo.png',
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.contain,
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: AppTheme.accent.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: AppTheme.accent.withOpacity(0.2)),
+                  ),
+                  child: const Icon(
+                    Icons.school_rounded,
+                    size: 40,
+                    color: AppTheme.accent,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 Text('ETLab Tracker', style: AppTheme.headlineLarge),
